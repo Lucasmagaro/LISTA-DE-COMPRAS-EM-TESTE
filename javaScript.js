@@ -44,8 +44,9 @@ function adicionarItem(evento) {
     if (checkboxInput.checked) {
       checkboxCustomizado.classList.add("checked");
       itemTitulo.style.textDecoration = "line-through";
-      listaComprados.appendChild(itemDaLista);  /* Basicamente, estamos movendo o itemDaLista para dentro do elemento listaComprados.*/ 
-      checkboxCustomizado.classList.remove("checked");
+      listaComprados.appendChild(itemDaLista); 
+      /* Basicamente, estamos movendo o itemDaLista para dentro do elemento listaComprados.*/ 
+    }else{ checkboxCustomizado.classList.remove("checked");
       itemTitulo.style.textDecoration = "none";
       listaDeCompras.appendChild(itemDaLista); /* Portanto, estamos movendo o itemDaLista para dentro do elemento listaDeCompras.*/ /*Basicamente, estamos transferindo o itemDaLista de uma lista para outra. Ele sai de listaComprados e entra em listaDeCompras.*/ 
     }
