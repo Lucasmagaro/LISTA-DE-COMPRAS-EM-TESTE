@@ -1,7 +1,8 @@
+
 const item = document.getElementById("input-item");
 const botaoSalvarItem = document.getElementById("adicionar-item");
 const listaDeCompras = document.getElementById("lista-de-compras");
-
+const listaComprados = document.getElementById("lista-comprados");
 let contador = 0;
 /*Detectando cliques no botão com addEventListener() */
 /* Para definir a ação que ocorrerá, inserimos dois valores,um evento outro açãoa ser executada */
@@ -31,6 +32,25 @@ function adicionarItem(evento) {
   const checkboxLabel = document.createElement("label");
   checkboxLabel.setAttribute("for", checkboxInput.id);
 
+  checkboxLabel.addEventListener("click", function (evento) {
+    const checkboxInput = evento.currentTarget.querySelector(".checkbox-input");
+    const checkboxCustomizado = evento.currentTarget.querySelector(
+      ".checkbox-customizado"
+    );
+    const itemTitulo = evento.currentTarget
+      .closest("li")
+      .querySelector("#item-titulo");
+
+    if (checkboxInput.checked) {
+      checkboxCustomizado.classList.add("checked");
+      itemTitulo.style.textDecoration = "line-through";
+      listaComprados.appendChild(itemDaLista);  /* Basicamente, estamos movendo o itemDaLista para dentro do elemento listaComprados.*/ 
+      checkboxCustomizado.classList.remove("checked");
+      itemTitulo.style.textDecoration = "none";
+      listaDeCompras.appendChild(itemDaLista); /* Portanto, estamos movendo o itemDaLista para dentro do elemento listaDeCompras.*/ /*Basicamente, estamos transferindo o itemDaLista de uma lista para outra. Ele sai de listaComprados e entra em listaDeCompras.*/ 
+    }
+  });
+
   const checkboxCustomizado = document.createElement("div");
   checkboxCustomizado.classList.add("checkbox-customizado");
 
@@ -41,6 +61,7 @@ function adicionarItem(evento) {
   /*termino do codigo do checkbox*/
 
   const NomeDoItem = document.createElement("p");
+  NomeDoItem.id = "item-titulo";
   NomeDoItem.innerText = item.value;
   containerNomeDoItem.appendChild(NomeDoItem);
 
@@ -75,3 +96,4 @@ function adicionarItem(evento) {
   /*containerItemLista.appendChild(containerBotaoEdit);*/
   listaDeCompras.appendChild(itemDaLista);
 }
+
