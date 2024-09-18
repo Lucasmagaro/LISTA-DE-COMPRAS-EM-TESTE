@@ -1,4 +1,3 @@
-
 const item = document.getElementById("input-item");
 const botaoSalvarItem = document.getElementById("adicionar-item");
 const listaDeCompras = document.getElementById("lista-de-compras");
@@ -13,12 +12,12 @@ botaoSalvarItem.addEventListener("click", adicionarItem);
 
 function adicionarItem(evento) {
   evento.preventDefault();
-
   const itemDaLista = document.createElement("li");
   const containerItemLista = document.createElement("div");
   containerItemLista.classList.add("item-lista-container");
 
   const containerNomeDoItem = document.createElement("div");
+  containerNomeDoItem.classList.add('container-nome-compra'); // <-- Adicionado para deixar o texto do lado do checkbox
 
   /*codigo do DOM para implemeentar checkbox*/
   const containerCheckbox = document.createElement("div");
@@ -32,26 +31,6 @@ function adicionarItem(evento) {
   const checkboxLabel = document.createElement("label");
   checkboxLabel.setAttribute("for", checkboxInput.id);
 
-  checkboxLabel.addEventListener("click", function (evento) {
-    const checkboxInput = evento.currentTarget.querySelector(".checkbox-input");
-    const checkboxCustomizado = evento.currentTarget.querySelector(
-      ".checkbox-customizado"
-    );
-    const itemTitulo = evento.currentTarget
-      .closest("li")
-      .querySelector("#item-titulo");
-
-    if (checkboxInput.checked) {
-      checkboxCustomizado.classList.add("checked");
-      itemTitulo.style.textDecoration = "line-through";
-      listaComprados.appendChild(itemDaLista); 
-      /* Basicamente, estamos movendo o itemDaLista para dentro do elemento listaComprados.*/ 
-    }else{ checkboxCustomizado.classList.remove("checked");
-      itemTitulo.style.textDecoration = "none";
-      listaDeCompras.appendChild(itemDaLista); /* Portanto, estamos movendo o itemDaLista para dentro do elemento listaDeCompras.*/ /*Basicamente, estamos transferindo o itemDaLista de uma lista para outra. Ele sai de listaComprados e entra em listaDeCompras.*/ 
-    }
-  });
-
   const checkboxCustomizado = document.createElement("div");
   checkboxCustomizado.classList.add("checkbox-customizado");
 
@@ -60,11 +39,13 @@ function adicionarItem(evento) {
   checkboxLabel.appendChild(checkboxCustomizado);
   containerNomeDoItem.appendChild(containerCheckbox);
   /*termino do codigo do checkbox*/
-
+  
   const NomeDoItem = document.createElement("p");
   NomeDoItem.id = "item-titulo";
   NomeDoItem.innerText = item.value;
   containerNomeDoItem.appendChild(NomeDoItem);
+  
+  checkboxLabel.addEventListener("click", () => clickCheck(checkboxCustomizado, NomeDoItem, itemDaLista)); // <-- Movi para essa posição para ter os elementos criado para poder passar nos parametros
 
   /* primeiro botao */
   const containerBotoes = document.createElement("div");
@@ -98,3 +79,17 @@ function adicionarItem(evento) {
   listaDeCompras.appendChild(itemDaLista);
 }
 
+// Criei essa function para facilitar o entendimento
+function clickCheck(checkboxCustomizado, itemTitulo, itemDaLista) {
+  debugger
+  if (!checkboxCustomizado.checked) {
+    checkboxCustomizado.classList.add("checked");
+    itemTitulo.style.textDecoration = "line-through";
+    listaComprados.appendChild(itemDaLista); 
+    /* Basicamente, estamos movendo o itemDaLista para dentro do elemento listaComprados.*/ 
+  }else{
+    checkboxCustomizado.classList.remove("checked");
+    itemTitulo.style.textDecoration = "none";
+    listaDeCompras.appendChild(itemDaLista); /* Portanto, estamos movendo o itemDaLista para dentro do elemento listaDeCompras.*/ /*Basicamente, estamos transferindo o itemDaLista de uma lista para outra. Ele sai de listaComprados e entra em listaDeCompras.*/ 
+  }
+}
